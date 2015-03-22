@@ -1,0 +1,65 @@
+import {Component, Template} from 'angular2/angular2';
+import {bootstrap, Foreach, If} from 'angular2/angular2';
+import {bind} from 'angular2/di';
+import {FormDirectives, ControlGroup, Control} from 'angular2/forms';
+import {XHRImpl} from 'angular2/src/core/compiler/xhr/xhr_impl';
+    
+@Component({
+    selector: 'flugsuchen',
+    componentServices: []
+})
+@Template({
+  url: 'flugsuchen.html',
+  directives: [Foreach, If, FormDirectives]
+})
+class FlugSuchenVM {
+
+    fluege;
+    selectedFlug;
+    filter;
+    message;
+    
+    constructor() {
+        
+        this.fluege = [];
+        
+        this.filter = new ControlGroup({
+            'von': new Control('Graz'),
+            'nach': new Control('Wien'),
+        });
+      
+        
+    }
+    
+    selectFlug(flug) {
+        this.selectedFlug = flug;
+    }
+    
+    flugSuchen() {
+            var that = this;
+            var url = "/fluege.txt?"
+                + "von=" 
+                + encodeURIComponent(this.filter.von) 
+                + "nach=" 
+                + encodeURIComponent(this.filter.nach);
+
+        
+            var xhReq = new XMLHttpRequest();
+        
+            xhReq.open("GET", url, true);
+        
+            xhReq.onreadystatechange = () => {
+                if (xhReq.readyState != 4)  { return; }
+                
+                var text = xhReq.responseText;
+                this.fluege = JSON.parse(text);
+                this.message = that.fluege.length + " Flüge geladen!";
+            }
+        
+            xhReq.send(null);
+    }
+    
+}
+
+bootstrap(FlugSuchenVM);
+

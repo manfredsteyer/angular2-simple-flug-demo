@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <title>Angular 2 Flug-Beispiel</title>
+
+    <script src="dist/es6-shim.js"></script>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    
+    </head>
+  <body>
+  
+      
+        <flugsuchen></flugsuchen>
+      
+      <script>
+        
+        //System.paths = {
+        /*'angular2/*':'angular2/*.js', 
+        'rtts_assert/*': 'rtts_assert/*.js', 
+        'css/bootstrap.css': 'bower_components/bootstrap/dist/css/bootstrap.css',
+        '*': '*.js'*/
+           // '/**/*': '/**/*.js'
+        //};
+
+        System.import('app').then(function(app) { 
+            app.main();
+        });
+
+      </script>
+    
+  </body>
+</html>
+

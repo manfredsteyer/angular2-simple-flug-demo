@@ -1,0 +1,102 @@
+<style>
+    @import url('bower_components/bootstrap/dist/css/bootstrap.css');
+</style>
+
+<div class="container">
+
+    <h1>Flug suchen</h1>
+
+
+    <div [control-group]="filter">
+
+        <div class="form-group">
+            <label for="von">Von: </label>
+            <input id="von" control="von" type="text" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="nach">Nach: </label>
+            <input id="nach" control="nach" type="text" class="form-control">
+        </div>
+
+        <div>
+
+        <bindsample control="test" type="text"></bindsample>
+
+        </div>
+
+        <div class="form-group">
+            <input type="button" value="Suchen" (click)="flugSuchen()" class="btn">
+        </div>
+
+    </div>
+
+    <div [hidden]="message == null" class="alert alert-info alert-dismissible" >
+        {{ message }}
+    </div>
+
+    <table class="table table-striped" *if="fluege.length != 0">
+
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Datum</th>
+            <th>Von</th>
+            <th>Nach</th>
+            <th>Aktion</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *foreach="#flug in fluege" [class.info]="selectedFlug == flug">
+
+            <td>{{flug.id}}</td>
+            <td>{{flug.datum}}</td>
+            <td>{{flug.abflugOrt}}</td>
+            <td>{{flug.zielOrt}}</td>
+
+            <td><a href="#" (click)="selectFlug(flug)">Auswählen</a></td>
+
+        </tr>
+        </tbody>
+
+    </table>
+
+
+    <!-- Sample for if with Template-Syntax -->
+
+    <template [if]="fluege.length != 0">
+        <b>{{fluege.length}} Flüge gefunden!</b>
+    </template>
+
+    <div template="if: fluege.length != 0">
+        <b>{{fluege.length}} Flüge gefunden!</b>
+    </div>
+
+
+    <!-- Sample for foreach with template-syntax -->
+    <!-- : und ; optional -->
+    <table>
+        <tr template="foreach: #flug in fluege">
+
+            <td>{{flug.id}}</td>
+            <td>{{flug.datum}}</td>
+            <td>{{flug.abflugOrt}}</td>
+            <td>{{flug.zielOrt}}</td>
+        </tr>
+    </table>
+
+
+    <!-- Sample for foreach with template-syntax -->
+    <table>
+        <template foreach #flug [in]="fluege"> 
+        <tr>
+
+            <td>{{flug.id}}</td>
+            <td>{{flug.datum}}</td>
+            <td>{{flug.abflugOrt}}</td>
+            <td>{{flug.zielOrt}}</td>
+        </tr>
+        </template>
+    </table>
+</div>
